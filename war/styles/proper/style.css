@@ -85,7 +85,7 @@ Content Css
 #content .grid-style-properties .price{display: block;padding: 10px;font-size: 18px;}
 #content .grid-style-properties .short-detail{margin-bottom: 0;}
 #content .grid-style-properties .with-hover img{height: 216px !important; width: auto; }
-#content .item-desk .title h3{font-size: 14px;font-weight: bold;margin: 0;line-height: 20px;padding: 0;}
+#content .item-desk .title h3{font-size: 14px;font-weight: bold;margin: 0;line-height: 10px;padding: 0;}
 #content .item-desk .price{font-weight: bold;}
 #content .item-desk .location{font-size: 80%;}
 #content .box-white{background: white; box-shadow:0 1px 1px #858585; ;padding: 10px;margin-bottom: 10px;}
@@ -93,7 +93,7 @@ Content Css
 #content .list-items .item{-webkit-transition: all 0.25s ease-out 0s;-moz-transition: all 0.25s ease-out 0s;-ms-transition: all 0.25s ease-out 0s;-o-transition: all 0.25s ease-out 0s;transition: all 0.25s ease-out 0s;}
 #content .list-items .item:hover{background: #353535;color: #CCC;transform:scale(1.1,1.1) ;-ms-transform:scale(1.1,1.1) ; /* IE 9 */-moz-transform:scale(1.1,1.1) ; /* Moz */-webkit-transform:scale(1.1,1.1) ; /* Safari and Chrome */}
 #content .list-items .item:hover a{color: orange;text-decoration: none;}
-#content .list-items .item-desk .title h3{font-size: 14px;font-weight: normal;margin: 0;line-height: 20px;padding: 0;padding-top:5px;}
+#content .list-items .item-desk .title h3{font-size: 14px;font-weight: normal;margin: 0;padding: 0;padding-top:5px;}
 #content .list-items .item-desk .price{font-weight: bold;}
 #content .list-items .item-desk .location{font-size: 70%;}
 #content .best-rent, #content .featured-grid{margin-bottom: 20px;}
@@ -493,7 +493,7 @@ form .half{width: 47%;}
 form input[type="text"],select, label, form input[type="email"], form input[type="number"], form input[type="email"], form input[type="password"], form input[type="tel"], textarea{font-size: 12px;-moz-border-radius: 0;-webkit-border-radius: 0;border-radius: 0;}
 form label{font-weight: bold;}
 .btn.font-caly{padding-top: 10px;}
-select{float: left;color: #333333;border-radius: 0;line-height: 20px;width: 234px;border: 1px solid #ccc;border-radius: 0;appearance: none;-webkit-appearance: none;-moz-appearance:none;overflow: hidden;background: #fff url(../images/formelements-select.png) right center no-repeat;}
+select{float: left;color: #333333;border-radius: 0;width: 234px;border: 1px solid #ccc;border-radius: 0;appearance: none;-webkit-appearance: none;-moz-appearance:none;overflow: hidden;background: #fff url(../images/formelements-select.png) right center no-repeat;}
 select:focus{outline: none}
 /* ==========================================================================
    for device table or smartphone with less than 767 pixel

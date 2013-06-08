@@ -52,30 +52,33 @@
                     <div class="row-fluid">
                         <div class="span9">
                             <div class="panel right-line">
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                         
-                                    </div>
-                                </div>
+                                <h3 class="bottom-line main-heading box-panel">
+									<span class="main-circle-icon">
+										<i class="icon-map-marker"></i>
+									</span>  Your Direction
+								</h3> 
                                 <div class="googleMaparea right-space">
                                     <div id="googleMap" class=""></div>
                                 </div>
                             </div>
                         </div>
                         <div class="span3">
-                            <div id="searchLocationPanel" class="panel" >
-                                <!--Start Form Search Location-->
-                                <h3 class="main-heading bottom-line line-before">
+                      		<div id="titleDiv"><h3 class="main-heading bottom-line line-before">
 									<span class="main-circle-icon">
 									<i class="icon-search"></i>
-									</span>  Find Location
-								</h3>   
+									</span>  Search
+								</h3> </div> 
+                            <div id="searchLocationPanel" class="panel" style="overflow:auto; height:400px;">
+                                <!--Start Form Search Location-->
+                                
+								<form class="bottom-line line-before" action="javascript:submit()">  
                                     <label>From: </label>
-                                    <input id="from" type="text" />
+                                    <input id="from" type="text" class="input-block-level"/>
                                     <label>To: </label>
-                                    <input id="to" type="text" />
+                                    <input id="to" type="text" class="input-block-level"/>
 									<label>&nbsp</label>
-                                    <button type="submit" class="input-block-level btn-proper btn btn-large" onclick="javascript:submit()"> Search</button>
+                                    <button type="submit" class="input-block-level btn-proper btn btn-large" > Search</button>
+                                </form>    
                                 <!--End Form Search Properties-->
                             </div>
                             <!--Get Result Search 

@@ -50,39 +50,10 @@ function init_back_to_top(){
     });
 }
 
-function submit(){
-	var jq = jQuery.noConflict();
-	//var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
-    //var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
-    
-    jq.ajax({
-        type : "GET",
-		url : "/ride/get",
-		success : function(data){
-			if(data.length>0){
-				isEmpty = false;
-			}else{
-				isEmpty = true;
-			}
-			
-			if (!isEmpty){
-				jq("#searchLocationPanel").html('<h3 class="bottom-line  line-before main-heading"><span class="main-circle-icon"><i class="icon-list"></i></span>  Rides</h3><div class="panel" style="overflow:auto; height:300px;" ></br><table class="table"  id="idTable"></table></td>');
-				for(var i=0;i<data.length;i++){
-					//console.log(data[i]);
-					jq("#idTable").append('<tr><td ><div class="item-desk">'+
-					'Plate No: '+data[i].plateNo+'<br/>'+
-					'<div class="title">Name: '+data[i].userName+'</div>'+
-					'H/p: '+data[i].phoneNo+'<br/>'+
-					'Fare: '+data[i].fare+' RM<br/>'+
-					'Time: '+ dateFormat(data[i].time)+
-					'</td><td><img src="images/map/person.png" alt="'+data[i].userName+
-					'" height="48" width="48"/><br/><a href="#" class="btn-proper btn btn-small ">Credit</a></td></tr>'+
-					'');
-				}
-			}
-		}
-    });
-}
+
+
+
+
 
 function dateFormat(input){
 	var date = new Date(input*1000);
@@ -105,6 +76,7 @@ function dateFormat(input){
 	return formattedTime;
 }
 
+var map;
 function initialize() {
 		
 		var directionsDisplay;
@@ -121,6 +93,8 @@ function initialize() {
   
 	  	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 	  	directionsDisplay.setMap(map);
+	  	
+	  	//google.maps.event.addListenerOnce(map, 'tilesloaded', driverAddress);
 	  	
 		var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
         var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
@@ -206,6 +180,83 @@ function initialize() {
 			});
 }
 
+function addmarker(lat, lng) {
+	
+	var location = new google.maps.LatLng(lat, lng);
+		
+    var marker = new google.maps.Marker({
+        position: location,
+        title: 'new marker',
+        draggable: true,
+        map: map
+    });
+    map.setCenter(marker.getPosition());
+    
+}
+
+function submit(){
+	var a = 42.745389;
+	var b = 12.738402;
+	var location = new google.maps.LatLng(a, b);
+	
+	/*var mapOptions = {
+			zoom: 8,
+			center: location,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+
+  	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);*/
+  	
+	var jq = jQuery.noConflict();
+	
+    jq.ajax({
+        type : "GET",
+		url : "/ride/get",
+		success : function(data){
+			if(data.length>0){
+				isEmpty = false;
+			}else{
+				isEmpty = true;
+			}
+			
+			if (!isEmpty){
+				jq("#titleDiv").html('<h3 class="bottom-line  line-before main-heading">'+
+						'<span class="main-circle-icon"><i class="icon-list"></i></span>  Rides'+
+						'</h3>');
+				jq("#searchLocationPanel").html(
+							'<div id="idDiv" class="list-items" style="overflow:hidden;"></div>'
+						);
+				
+				for(var i=0;i<data.length;i++){
+					
+					//console.log(data[i]);
+					jq("#idDiv").append(
+							
+								'<div class="item" style="padding-left: 10px;">'+
+									'<div class="img-preview">'+
+										'<img src="images/agents/thum_list/a2.jpg" alt="Corin Langpost" />'+
+									'</div>'+
+									'<div class="item-desk">'+
+										'<input type="hidden" id="id" value="'+ data[i].id +'"/>'+
+										'<input type="hidden" id="from" value="'+ data[i].fromLat +'"/>'+
+										'<input type="hidden" id="to" value="'+ data[i].fromLng +'"/>'+
+										'<div class="title" ><h3><a href="#">Name: '+ data[i].userName +'</a></h3></div>'+
+										'<div class="title" ><h3><a href="#">Plate No: '+ data[i].plateNo +'</a></h3></div>'+
+										'<div class="location" style="font-size: 10px;">H/p: '+ data[i].phoneNo +'</div>'+
+										'<div class="location" style="font-size: 10px;">Time: '+ dateFormat(data[i].time) +'</div>'+
+										'<div class="location" style="font-size: 10px;">Fare: '+ data[i].fare +' RM</div>'+
+										'<a href="#" class="btn-proper btn-mini btn">Show</a>'+
+									'</div>'+
+									'<div class="clearfix"></div>'+
+								'</div>');
+					a += i; 
+					b += i;
+					addmarker(a, b);
+				}
+			}
+		}
+    });
+}
 
 
 function init_gmap3(){
