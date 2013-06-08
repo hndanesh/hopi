@@ -1,13 +1,20 @@
 package com.hackathon.hopi.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.hackathon.hopi.json.JsonDateSerializer;
+
 @Entity
+@JsonAutoDetect
 public class Ride {
 	
 	private Long id;
@@ -22,6 +29,7 @@ public class Ride {
 	private String phoneNo;
 	private Double fare;
 	private Date time;
+	private List<String> passengers;
 
 	public Ride(){}
 	
@@ -83,6 +91,7 @@ public class Ride {
 		this.fare = fare;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getTime() {
 		return time;
 	}
@@ -121,6 +130,23 @@ public class Ride {
 
 	public void setToLng(Float toLng) {
 		this.toLng = toLng;
+	}
+	
+	public List<String> getPassengers() {
+		return passengers;
+	}
+
+	public void setPassengers(List<String> passengers) {
+		this.passengers = passengers;
+	}
+
+	@Override
+	public String toString() {
+		return "Ride [id=" + id + ", from=" + from + ", fromLat=" + fromLat
+				+ ", fromLng=" + fromLng + ", to=" + to + ", toLat=" + toLat
+				+ ", toLng=" + toLng + ", plateNo=" + plateNo + ", userName="
+				+ userName + ", phoneNo=" + phoneNo + ", fare=" + fare
+				+ ", time=" + time + "]";
 	}
 	
 	
