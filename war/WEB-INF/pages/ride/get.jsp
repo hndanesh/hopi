@@ -9,16 +9,16 @@
         height: 400px;
       }
 </style>
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/bootstrap.js"></script>
+<script src="/scripts/jquery-1.8.2.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBoEiR3oXox0_yzyCDMiPcmornfZInH-U8&sensor=false&libraries=places">
 </script>
 <script type="text/javascript">
     var jq = jQuery.noConflict();
-    var lat;
-    var lng;
-    var geocoder;
+    var lat=40.779502;
+    var lng=-73.967857;
+    var geocoder;	
     var currentPosition;
     var map;
     var loc='';
@@ -137,6 +137,20 @@
           }
         });
     }
+    
+    // Function for adding a marker to the page.
+    function addMarker(location) {
+        marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    }
+
+    // Testing the addMarker function
+    function TestMarker() {
+           CentralPark = new google.maps.LatLng(37.7699298, -122.4469157);
+           addMarker(CentralPark);
+    }
 	</script>
 </head>
 <body>
@@ -152,12 +166,7 @@
 			<tr>
 				<td>ID</td>
 				<td>From</td>
-				<td>From Latitude</td>
-				<td>From Longitude</td>
 				<td>To</td>
-				<td>To Latitude</td>
-				<td>To Longitude</td>
-				<td>User ID</td>
 				<td>Plate No</td>
 				<td>Driver Name</td>
 				<td>Phone No</td>
@@ -178,12 +187,7 @@
 		<tr>
 			<td><%=r.getId()%></td>
 			<td><%=r.getFrom()%></td>
-			<td><%=r.getFromLat()%></td>
-			<td><%=r.getFromLng()%></td>
 			<td><%=r.getTo()%></td>
-			<td><%=r.getToLat()%></td>
-			<td><%=r.getToLng()%></td>
-			<td><%=r.getUserName()%></td>
 			<td><%=r.getPlateNo()%></td>
 			<td><%=r.getUserName()%></td>
 			<td><%=r.getPhoneNo()%></td>

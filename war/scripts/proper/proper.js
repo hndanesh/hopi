@@ -7,7 +7,8 @@ $( document ).ready(function() {
     /*link back to top animation*/
     init_back_to_top();
     /*google map Config*/
-    init_gmap3();
+    //init_gmap3();	
+	initialize();
     /*backgroung Config*/
     init_bgswitch();
     /*light box Config*/
@@ -49,12 +50,83 @@ function init_back_to_top(){
     });
 }
 
+function initialize() {
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(-34.397, 150.644),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  
+	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+  
+		var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
+        var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
+        var autocompletefrom = new google.maps.places.Autocomplete(fromText);
+        var autocompleteto = new google.maps.places.Autocomplete(toText);
+		
+		var infowindow = new google.maps.InfoWindow();
+	    var marker = new google.maps.Marker({
+		  map: map
+	    });
+  
+		autocompletefrom.bindTo('bounds', map);
+       // autocompleteto.bindTo('bounds', map);
+		
+		//-----------autocompletefrom
+			google.maps.event.addListener(autocompletefrom, 'place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			fromText.className = '';
+			var place = autocompletefrom.getPlace();
+			if (!place.geometry) {
+			  // Inform the user that the place was not found and return.
+			  fromText.className = 'notfound';
+			  return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+			  map.fitBounds(place.geometry.viewport);
+			} else {
+			  map.setCenter(place.geometry.location);
+			  map.setZoom(17);  // Why 17? Because it looks good.
+			}
+			marker.setIcon(/** @type {google.maps.Icon} */({
+			  url: place.icon,
+			  size: new google.maps.Size(71, 71),
+			  origin: new google.maps.Point(0, 0),
+			  anchor: new google.maps.Point(17, 34),
+			  scaledSize: new google.maps.Size(35, 35)
+			}));
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+
+			var address = '';
+			if (place.address_components) {
+			  address = [
+				(place.address_components[0] && place.address_components[0].short_name || ''),
+				(place.address_components[1] && place.address_components[1].short_name || ''),
+				(place.address_components[2] && place.address_components[2].short_name || '')
+			  ].join(' ');
+			}
+
+			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+			infowindow.open(map, marker);
+		});
+}
 
 function init_gmap3(){
     $(function(){
-        var icon_villa = "proper_theme/images/map/hostel_0star.png"
-        var icon_hotel = "proper_theme/images/map/villa.png"
-        var img_p = "proper_theme/images/properties/p1.jpg"
+        var icon_driver = "images/map/car2.png"
+        var icon_passenger = "images/map/passenger3.png"
+        var img_p = "images/properties/p1.jpg"
+        	
+        var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
+        var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
+        var autocompletefrom = new google.maps.places.Autocomplete(fromText);
+        var autocompleteto = new google.maps.places.Autocomplete(toText);
+        
+        
         $("#googleMap").gmap3({
             map:{
                 // CENTRAL MAP DEFAULT
@@ -84,7 +156,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_hotel
+                        icon: icon_passenger
                     }
                 },
 
@@ -99,7 +171,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_villa
+                        icon: icon_driver
                     }
                 },
 
@@ -114,7 +186,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_hotel
+                        icon: icon_passenger
                     }
                 },
 
@@ -129,7 +201,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_hotel
+                        icon: icon_passenger
                     }
                 },
 
@@ -144,7 +216,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_villa
+                        icon: icon_driver
                     }
                 },
 
@@ -159,7 +231,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_villa
+                        icon: icon_driver
                     }
                 },
                 {
@@ -173,7 +245,7 @@ function init_gmap3(){
                         city:"Jakarta"
                     }, 
                     options:{
-                        icon: icon_hotel
+                        icon: icon_passenger
                     }
                 }
                 ],
@@ -210,7 +282,9 @@ function init_gmap3(){
             }
 			
         });
+        
     });
+    
 }
 
 
