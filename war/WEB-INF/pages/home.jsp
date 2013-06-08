@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <html>
     <head>
         <title>Hopi - Carpool 2.0</title>
@@ -20,6 +24,17 @@
         <script type="text/javascript"></script>
     </head>
     <body >
+    <%
+    	UserService userService = UserServiceFactory.getUserService();
+    	User user = userService.getCurrentUser();
+    	if (user != null) {
+    		%>
+    			<input type="hidden" id="userId" value="<%=user.getEmail()%>"/>
+      		<%
+    	}else{
+    		response.sendRedirect(userService.createLoginURL("/home"));
+    	}
+			%>
         <!-- Start Wrapper-->
         <div id="wrapper">
             <div id="header-wrapper">

@@ -194,6 +194,9 @@ function addmarker(lat, lng) {
     
 }
 
+var driverRated='';
+var userId='';
+var jq;
 function submit(){
 	var a = 42.745389;
 	var b = 12.738402;
@@ -207,8 +210,46 @@ function submit(){
 
   	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);*/
   	
-	var jq = jQuery.noConflict();
+	jq = jQuery.noConflict();
 	
+	userId=jq("#userId").val();
+	var pending='';
+	jq.ajax({
+			type : "GET",
+			url : "/ride/getpending",
+			data : {id: userId},
+			success : function(data){
+				if(data!=''){
+					pending=data;
+					driverRated=data.userName;
+					jq("#searchLocationPanel").html('<form class="proper-singup" action="javascript:rate()">'+
+                            '<h1 class="">Rate this Ride</h1>'+
+                            'Driver : '+data.userName+'<br/>'+
+                            'From : '+data.from+'<br/>'+
+                            'To : '+data.to+'<br/>'+
+                            'Time : '+data.time+'<br/>'+
+                            '<hr>'+
+                            '<label>Punctuality</label>'+
+                            '<input type="radio" id="punctuality" value="0">Poor<br>'+
+                            '<input type="radio" name="punctuality" value="2">Average<br>'+
+                            '<input type="radio" name="punctuality" value="3">Good<br>'+
+                            '<input type="radio" name="punctuality" value="5">Excellent<br>'+
+                            '<label>Driving</label>'+
+                            '<input type="radio" id="driving" value="0">Poor<br>'+
+                            '<input type="radio" name="driving" value="2">Average<br>'+
+                            '<input type="radio" name="driving" value="3">Good<br>'+
+                            '<input type="radio" name="driving" value="5">Excellent<br>'+
+                            '<label>Conduct</label>'+
+                            '<input type="radio" id="conduct" value="0">Poor<br>'+
+                            '<input type="radio" name="conduct" value="2">Average<br>'+
+                            '<input type="radio" name="conduct" value="3">Good<br>'+
+                            '<input type="radio" name="conduct" value="5">Excellent<br>'+
+                            '<hr/><button type="submit" class="btn-proper btn">Submit</button>'+
+                            '</form>');
+					}
+				},
+				 complete : function(){
+					 if(pending==''){
     jq.ajax({
         type : "GET",
 		url : "/ride/get",
@@ -243,7 +284,7 @@ function submit(){
 										'<div class="title" ><h3><a href="#">Name: '+ data[i].userName +'</a></h3></div>'+
 										'<div class="title" ><h3><a href="#">Plate No: '+ data[i].plateNo +'</a></h3></div>'+
 										'<div class="location" style="font-size: 10px;">H/p: '+ data[i].phoneNo +'</div>'+
-										'<div class="location" style="font-size: 10px;">Time: '+ dateFormat(data[i].time) +'</div>'+
+										'<div class="location" style="font-size: 10px;">Time: '+ data[i].time +'</div>'+
 										'<div class="location" style="font-size: 10px;">Fare: '+ data[i].fare +' RM</div>'+
 										'<a href="#" class="btn-proper btn-mini btn">Show</a>'+
 									'</div>'+
@@ -256,6 +297,9 @@ function submit(){
 			}
 		}
     });
+					 }
+				 }
+	});
 }
 
 
