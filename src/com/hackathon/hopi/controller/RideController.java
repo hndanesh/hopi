@@ -96,8 +96,16 @@ public class RideController {
 	
 	@RequestMapping(value="/register", method= RequestMethod.POST)
 	public ModelAndView registerRide(HttpServletRequest request, ModelMap model){
-		
-		return new ModelAndView("redirect:get");
+		if(null!=request.getParameter("id")&&
+				null!=request.getParameter("passengerName")){
+			if(rideManager.exists(Long.parseLong(request.getParameter("id")))){
+				Ride ride=rideManager.get(Long.parseLong(request.getParameter("id")));
+				ride.getPassengers().add(request.getParameter("passengerName"));
+				rideManager.save(ride);
+			}
+		}
+			
+		return new ModelAndView(request.getContextPath());
 	}
 
 }

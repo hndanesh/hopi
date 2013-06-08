@@ -13,6 +13,7 @@ public class Driver {
 	private String plateNo;
 	private int rating;
 	private List<String> comments;
+	private List<Long> rides;
 
 	@Id
 	public String getName() {
@@ -54,5 +55,15 @@ public class Driver {
 	public void setComments(List<String> comments) {
 		this.comments = comments;
 	}
+
+	public List<Long> getRides() {
+		return rides;
+	}
+
+	public void setRides(List<Long> rides) {
+		this.rides = rides;
+	}
+	
+	
 
 }
