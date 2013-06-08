@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.appengine.api.users.User;
@@ -32,7 +33,7 @@ public class RideController {
 	GenericManager<Driver, String> driverManager;
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public String getRides(HttpServletRequest request, ModelMap model){
+	public @ResponseBody List<Ride> getRides(HttpServletRequest request, ModelMap model){
 		List<Ride> results = rideManager.getAll();
 
 		if (results.isEmpty()) {
@@ -41,7 +42,7 @@ public class RideController {
 			model.addAttribute("rideList", results);
 		}
 
-		return "ride/get";
+		return results;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -91,6 +92,12 @@ public class RideController {
 
 		return new ModelAndView("redirect:get");
 
+	}
+	
+	@RequestMapping(value="/register", method= RequestMethod.POST)
+	public ModelAndView registerRide(HttpServletRequest request, ModelMap model){
+		
+		return new ModelAndView("redirect:get");
 	}
 
 }
