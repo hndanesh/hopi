@@ -11,8 +11,8 @@ public class Passenger {
 	private String name;
 	private List<Long> rideList;
 	private List<String> comments;
-	private Boolean pendingReview;
-	private Long pendingReiewId;
+	private Boolean hasPendingReview;
+	private Long pendingReiew;
 
 	@Id
 	public String getName() {
@@ -39,20 +39,20 @@ public class Passenger {
 		this.comments = comments;
 	}
 
-	public Boolean getPendingReview() {
-		return pendingReview;
+	public Boolean getHasPendingReview() {
+		return hasPendingReview;
 	}
 
-	public void setPendingReview(Boolean pendingReview) {
-		this.pendingReview = pendingReview;
+	public void setHasPendingReview(Boolean hasPendingReview) {
+		this.hasPendingReview = hasPendingReview;
 	}
 
-	public Long getPendingReiewId() {
-		return pendingReiewId;
+	public Long getPendingReiew() {
+		return pendingReiew;
 	}
 
-	public void setPendingReiewId(Long pendingReiewId) {
-		this.pendingReiewId = pendingReiewId;
+	public void setPendingReiew(Long pendingReiew) {
+		this.pendingReiew = pendingReiew;
 	}
 
 }

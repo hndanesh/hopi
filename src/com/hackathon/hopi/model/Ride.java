@@ -30,6 +30,7 @@ public class Ride {
 	private Double fare;
 	private Date time;
 	private List<String> passengers;
+	private int driverRating;
 
 	public Ride(){}
 	
@@ -139,6 +140,14 @@ public class Ride {
 	public void setPassengers(List<String> passengers) {
 		this.passengers = passengers;
 	}
+	
+	public int getDriverRating() {
+		return driverRating;
+	}
+
+	public void setDriverRating(int driverRating) {
+		this.driverRating=driverRating;
+	}
 
 	@Override
 	public String toString() {
@@ -147,8 +156,7 @@ public class Ride {
 				+ ", toLng=" + toLng + ", plateNo=" + plateNo + ", userName="
 				+ userName + ", phoneNo=" + phoneNo + ", fare=" + fare
 				+ ", time=" + time + "]";
-	}
-	
+	}	
 	
 
 }

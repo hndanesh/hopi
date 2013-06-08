@@ -18,6 +18,12 @@
         <from>/</from>
         <to type="redirect" last="true">home</to>
     </rule>
+    
+    <rule>
+        <from>/home/**</from>
+        <to>/home</to>
+    </rule>
+    
     <rule>
         <from>/_ah/**</from>
         <to>/_ah/$1</to>
@@ -70,7 +76,7 @@
         <from>/logout*</from>
         <to>/logout.jsp</to>
     </rule>
-
+    
     <!-- Spring MVC -->
     <rule>
         <from>/**</from>
@@ -80,6 +86,8 @@
         <from>/app/**</from>
         <to>/$1</to>
     </outbound-rule>
+    
+	        
     <!-- Remove JSESSIONID from URLs when cookies disabled -->
     <!-- http://stackoverflow.com/questions/962729/is-it-possible-to-disable-jsessionid-in-tomcat-servlet -->
     <outbound-rule encodefirst="true" match-type="regex">
