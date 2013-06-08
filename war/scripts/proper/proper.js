@@ -1,22 +1,22 @@
 //standart load
 $( document ).ready(function() {
     /*tooltip*/
-    init_tooltip();
+    //init_tooltip();
     /*tab*/
-    init_tabs();
+    //init_tabs();
     /*link back to top animation*/
-    init_back_to_top();
+    //init_back_to_top();
     /*google map Config*/
     //init_gmap3();	
 	initialize();
     /*backgroung Config*/
-    init_bgswitch();
+   // init_bgswitch();
     /*light box Config*/
-    init_color_box();
+   // init_color_box();
     /*Slider Config*/
-    init_slider();
+   // init_slider();
     /*Grid Config*/
-    init_grid();
+   // init_grid();
 });
 
 
@@ -50,17 +50,81 @@ function init_back_to_top(){
     });
 }
 
+function submit(){
+	var jq = jQuery.noConflict();
+	//var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
+    //var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
+    
+    jq.ajax({
+        type : "GET",
+		url : "/ride/get",
+		success : function(data){
+			if(data.length>0){
+				isEmpty = false;
+			}else{
+				isEmpty = true;
+			}
+			
+			if (!isEmpty){
+				jq("#searchLocationPanel").html('<h3 class="bottom-line  line-before main-heading"><span class="main-circle-icon"><i class="icon-list"></i></span>  Rides</h3><div class="panel" style="overflow:auto; height:300px;" ></br><table class="table"  id="idTable"></table></td>');
+				for(var i=0;i<data.length;i++){
+					//console.log(data[i]);
+					jq("#idTable").append('<tr><td ><div class="item-desk">'+
+					'Plate No: '+data[i].plateNo+'<br/>'+
+					'<div class="title">Name: '+data[i].userName+'</div>'+
+					'H/p: '+data[i].phoneNo+'<br/>'+
+					'Fare: '+data[i].fare+' RM<br/>'+
+					'Time: '+ dateFormat(data[i].time)+
+					'</td><td><img src="images/map/person.png" alt="'+data[i].userName+
+					'" height="48" width="48"/><br/><a href="#" class="btn-proper btn btn-small ">Credit</a></td></tr>'+
+					'');
+				}
+			}
+		}
+    });
+}
+
+function dateFormat(input){
+	var date = new Date(input*1000);
+	
+	var day = date.getDay();
+	
+	var month = date.getMonth();
+	
+	var year = date.getYear();
+	// hours part from the timestamp
+	var hours = date.getHours();
+	// minutes part from the timestamp
+	var minutes = date.getMinutes();
+	// seconds part from the timestamp
+	var seconds = date.getSeconds();
+
+	// will display time in 10:30:23 format
+	var formattedTime = day + '/' + month +'/'+ year +' '+ hours + ':' + minutes + ':' + seconds;
+	
+	return formattedTime;
+}
+
 function initialize() {
-  var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(-34.397, 150.644),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+		
+		var directionsDisplay;
+		var directionsService = new google.maps.DirectionsService();
+		
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		var location = new google.maps.LatLng(-34.397, 150.644);
+		 
+		var mapOptions = {
+				zoom: 8,
+				center: location,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
   
-	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
-  
+	  	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+	  	directionsDisplay.setMap(map);
+	  	
 		var fromText = /** @type {HTMLInputElement} */(document.getElementById('from'));
         var toText = /** @type {HTMLInputElement} */(document.getElementById('to'));
+        
         var autocompletefrom = new google.maps.places.Autocomplete(fromText);
         var autocompleteto = new google.maps.places.Autocomplete(toText);
 		
@@ -72,48 +136,77 @@ function initialize() {
 		autocompletefrom.bindTo('bounds', map);
        // autocompleteto.bindTo('bounds', map);
 		
-		//-----------autocompletefrom
+			//-----------autocompletefrom
 			google.maps.event.addListener(autocompletefrom, 'place_changed', function() {
-			infowindow.close();
-			marker.setVisible(false);
-			fromText.className = '';
-			var place = autocompletefrom.getPlace();
-			if (!place.geometry) {
-			  // Inform the user that the place was not found and return.
-			  fromText.className = 'notfound';
-			  return;
-			}
-
-			// If the place has a geometry, then present it on a map.
-			if (place.geometry.viewport) {
-			  map.fitBounds(place.geometry.viewport);
-			} else {
-			  map.setCenter(place.geometry.location);
-			  map.setZoom(17);  // Why 17? Because it looks good.
-			}
-			marker.setIcon(/** @type {google.maps.Icon} */({
-			  url: place.icon,
-			  size: new google.maps.Size(71, 71),
-			  origin: new google.maps.Point(0, 0),
-			  anchor: new google.maps.Point(17, 34),
-			  scaledSize: new google.maps.Size(35, 35)
-			}));
-			marker.setPosition(place.geometry.location);
-			marker.setVisible(true);
-
-			var address = '';
-			if (place.address_components) {
-			  address = [
-				(place.address_components[0] && place.address_components[0].short_name || ''),
-				(place.address_components[1] && place.address_components[1].short_name || ''),
-				(place.address_components[2] && place.address_components[2].short_name || '')
-			  ].join(' ');
-			}
-
-			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-			infowindow.open(map, marker);
-		});
+				infowindow.close();
+				marker.setVisible(false);
+				fromText.className = '';
+				var place = autocompletefrom.getPlace();
+				if (!place.geometry) {
+				  // Inform the user that the place was not found and return.
+				  fromText.className = 'notfound';
+				  return;
+				}
+	
+				// If the place has a geometry, then present it on a map.
+				if (place.geometry.viewport) {
+				  map.fitBounds(place.geometry.viewport);
+				} else {
+				  map.setCenter(place.geometry.location);
+				  map.setZoom(17);  // Why 17? Because it looks good.
+				}
+				marker.setIcon(/** @type {google.maps.Icon} */({
+				  url: place.icon,
+				  size: new google.maps.Size(71, 71),
+				  origin: new google.maps.Point(0, 0),
+				  anchor: new google.maps.Point(17, 34),
+				  scaledSize: new google.maps.Size(35, 35)
+				}));
+				marker.setPosition(place.geometry.location);
+				marker.setVisible(true);
+	
+				var address = '';
+				if (place.address_components) {
+				  address = [
+					(place.address_components[0] && place.address_components[0].short_name || ''),
+					(place.address_components[1] && place.address_components[1].short_name || ''),
+					(place.address_components[2] && place.address_components[2].short_name || '')
+				  ].join(' ');
+				}
+	
+				infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+				infowindow.open(map, marker);
+			});
+			
+			
+			//-----------autocompleteTo
+			google.maps.event.addListener(autocompleteto, 'place_changed', function() {
+				infowindow.close();
+				marker.setVisible(false);
+				toText.className = '';
+				var place = autocompleteto.getPlace();
+				if (!place.geometry) {
+				  // Inform the user that the place was not found and return.
+				  toText.className = 'notfound';
+				  return;
+				}
+				
+			  	var request = {
+			  			origin:fromText.value,
+			  			destination:toText.value,
+			  			travelMode: google.maps.DirectionsTravelMode.DRIVING
+				};
+					
+				directionsService.route(request, function(response, status) {
+				    if (status == google.maps.DirectionsStatus.OK) {
+				    	directionsDisplay.setDirections(response);
+				    }
+				});
+				
+			});
 }
+
+
 
 function init_gmap3(){
     $(function(){

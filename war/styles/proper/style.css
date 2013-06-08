@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic);
 
 /* Main settings */
-body {width: 100%; overflow-x: hidden;-webkit-font-smoothing: antialiased;background-color: #DDD;color: #707070;font-size: 13px;height: 100%;margin: 0px;padding: 0px;font-family: 'Roboto', sans-serif;background-image: url(../images/pattern/diagonal-noise.png)}
+body {width: 100%; overflow-x: hidden;-webkit-font-smoothing: antialiased;background-color: #F4F3F0;color: #707070;font-size: 13px;height: 100%;margin: 0px;padding: 0px;font-family: 'Roboto', sans-serif;background-image: url(../images/pattern/diagonal-noise.png)}
 a{color: #707070;}
 a, .btn{-webkit-transition: all 0.25s ease-out 0s;-moz-transition: all 0.25s ease-out 0s;-ms-transition: all 0.25s ease-out 0s;-o-transition: all 0.25s ease-out 0s;transition: all 0.25s ease-out 0s;}
 h1, h2, h3, h4, h5, h6{font-weight: 300;}

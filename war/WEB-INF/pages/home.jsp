@@ -30,7 +30,7 @@
                         <a class="brand" href="index.html" ><h1 class="font-caly"><img src="images/logo.png" width="70" alt="logo"> Hopi 
                     </div>
 					<div >
-                        <div class="language_curency"> <!-- &nbsp;--> 
+                        <div class="language_curency" style="display:none"> <!-- &nbsp;--> 
 							lang: 
 							<a href="#">En</a> 
 							| 
@@ -63,25 +63,25 @@
                             </div>
                         </div>
                         <div class="span3">
-                            <div class="panel">
-                                <!--Start Form Search Properties-->
+                            <div id="searchLocationPanel" class="panel" >
+                                <!--Start Form Search Location-->
                                 <h3 class="main-heading bottom-line line-before">
 									<span class="main-circle-icon">
 									<i class="icon-search"></i>
 									</span>  Find Location
-								</h3>    
-                                <form class="bottom-line line-before" action="?" method="get">
+								</h3>   
                                     <label>From: </label>
-                                    <input id="from" type="text" placeholder="Type Your Location" value="Source" class="input-block-level" required=""/>
+                                    <input id="from" type="text" />
                                     <label>To: </label>
-                                    <input id="to" type="text" placeholder="Type Your Location" value="Destination" class="input-block-level" required=""/>
+                                    <input id="to" type="text" />
 									<label>&nbsp</label>
-                                    <button type="submit" class="input-block-level btn-proper btn btn-large" > Search</button>
-                                </form>
+                                    <button type="submit" class="input-block-level btn-proper btn btn-large" onclick="javascript:submit()"> Search</button>
                                 <!--End Form Search Properties-->
-
-                                
                             </div>
+                            <!--Get Result Search 
+                            <div  class="panel"  overflow:auto; height:300px;" >
+                            	<h3 class="main-heading bottom-line line-before">Driver List</h3>
+                            </div>-->
                         </div>
                     </div>
                 </div>
