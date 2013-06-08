@@ -20,4 +20,13 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="driverManager" class="com.hackathon.hopi.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.hackathon.hopi.dao.jpa.GenericDaoJpa">
+				<constructor-arg value="com.hackathon.hopi.model.Driver" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
 </beans>
